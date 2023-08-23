@@ -15,6 +15,7 @@ var http = _interopDefault(require('http'));
 var Url = _interopDefault(require('url'));
 var https = _interopDefault(require('https'));
 var zlib = _interopDefault(require('zlib'));
+var number = require('core-js/core/number');
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -22805,18 +22806,18 @@ function createHref(options, file) {
 	};
 }
 
-function getBadgeColor(percentage) {
-	if (typeof percentage !== 'number') {
-		return 'lightgrey';
-	}
-	if (percentage > 90) {
+function getBadgeColor(value) {
+	const percentage = number.parseInt(value, 10);
+	if (percentage > 60) {
 		return 'green';
 	}
-	if (percentage > 40) {
+	if (percentage >= 20) {
 		return 'orange';
 	}
-	return 'red';
-
+	if (percentage < 20) {
+	  return 'red';
+	}
+	return 'lightgrey';
 }
 
 // Tabulate the lcov data in a HTML table.

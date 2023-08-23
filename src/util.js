@@ -28,5 +28,4 @@ export function getBadgeColor(value) {
 	  return 'red';
 	}
 	return 'lightgrey';
-
 }
