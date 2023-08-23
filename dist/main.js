@@ -23099,7 +23099,7 @@ const MAX_COMMENT_CHARS = 65536;
 async function main$1() {
 	const token = core$1.getInput("github-token");
 	const githubClient = new github_2(token);
-	const workingDir = core$1.getInput('working-directory') || './';	
+	const workingDir = core$1.getInput('working-directory') || './';
 	const lcovFile = path.join(workingDir, core$1.getInput("lcov-file") || "./coverage/lcov.info");
 	const baseFile = core$1.getInput("lcov-base");
 	const shouldFilterChangedFiles =
@@ -23167,6 +23167,7 @@ async function main$1() {
 			body: body,
 		});
 	}
+	core$1.setOutput('coverage', percentage(lcov).toFixed(2));
 }
 
 main$1().catch(function(err) {

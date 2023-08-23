@@ -3,7 +3,7 @@ import core from "@actions/core"
 import { GitHub, context } from "@actions/github"
 import path from "path"
 
-import { parse } from "./lcov"
+import { parse, percentage } from "./lcov"
 import { diff } from "./comment"
 import { getChangedFiles } from "./get_changes"
 import { deleteOldComments } from "./delete_old_comments"
@@ -14,7 +14,7 @@ const MAX_COMMENT_CHARS = 65536
 async function main() {
 	const token = core.getInput("github-token")
 	const githubClient = new GitHub(token)
-	const workingDir = core.getInput('working-directory') || './';	
+	const workingDir = core.getInput('working-directory') || './';
 	const lcovFile = path.join(workingDir, core.getInput("lcov-file") || "./coverage/lcov.info")
 	const baseFile = core.getInput("lcov-base")
 	const shouldFilterChangedFiles =
@@ -82,6 +82,7 @@ async function main() {
 			body: body,
 		})
 	}
+	core.setOutput('coverage', percentage(lcov).toFixed(2));
 }
 
 main().catch(function(err) {
