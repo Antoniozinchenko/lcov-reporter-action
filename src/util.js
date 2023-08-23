@@ -14,3 +14,17 @@ export function createHref(options, file) {
 		filename
 	};
 }
+
+export function getBadgeColor(percentage) {
+	if (typeof percentage !== 'number') {
+		return 'lightgrey';
+	}
+	if (percentage > 90) {
+		return 'green';
+	}
+	if (percentage > 40) {
+		return 'orange';
+	}
+	return 'red';
+
+}

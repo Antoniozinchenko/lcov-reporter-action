@@ -7,7 +7,7 @@ import { parse, percentage } from "./lcov"
 import { diff } from "./comment"
 import { getChangedFiles } from "./get_changes"
 import { deleteOldComments } from "./delete_old_comments"
-import { normalisePath } from "./util"
+import { getBadgeColor, normalisePath } from "./util"
 
 const MAX_COMMENT_CHARS = 65536
 
@@ -82,7 +82,9 @@ async function main() {
 			body: body,
 		})
 	}
-	core.setOutput('coverage', percentage(lcov).toFixed(2));
+	const coverageResult = percentage(lcov).toFixed(2);
+	core.setOutput('result', coverageResult);
+	core.setOutput('color', getBadgeColor(coverageResult));
 }
 
 main().catch(function(err) {

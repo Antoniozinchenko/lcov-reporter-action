@@ -22805,6 +22805,20 @@ function createHref(options, file) {
 	};
 }
 
+function getBadgeColor(percentage) {
+	if (typeof percentage !== 'number') {
+		return 'lightgrey';
+	}
+	if (percentage > 90) {
+		return 'green';
+	}
+	if (percentage > 40) {
+		return 'orange';
+	}
+	return 'red';
+
+}
+
 // Tabulate the lcov data in a HTML table.
 function tabulate(lcov, options) {
 	const head = tr(
@@ -23167,7 +23181,9 @@ async function main$1() {
 			body: body,
 		});
 	}
-	core$1.setOutput('coverage', percentage(lcov).toFixed(2));
+	const coverageResult = percentage(lcov).toFixed(2);
+	core$1.setOutput('result', coverageResult);
+	core$1.setOutput('color', getBadgeColor(coverageResult));
 }
 
 main$1().catch(function(err) {
