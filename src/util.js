@@ -1,3 +1,4 @@
+import { parseInt } from 'core-js/core/number'
 import path from 'path'
 
 export function normalisePath(file) {
@@ -15,16 +16,17 @@ export function createHref(options, file) {
 	};
 }
 
-export function getBadgeColor(percentage) {
-	if (typeof percentage !== 'number') {
-		return 'lightgrey';
-	}
-	if (percentage > 90) {
+export function getBadgeColor(value) {
+	const percentage = parseInt(value, 10);
+	if (percentage > 60) {
 		return 'green';
 	}
-	if (percentage > 40) {
+	if (percentage >= 20) {
 		return 'orange';
 	}
-	return 'red';
+	if (percentage < 20) {
+	  return 'red';
+	}
+	return 'lightgrey';
 
 }
