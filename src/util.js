@@ -1,4 +1,3 @@
-import { parseInt } from 'core-js/core/number'
 import path from 'path'
 
 export function normalisePath(file) {

@@ -15,7 +15,6 @@ var http = _interopDefault(require('http'));
 var Url = _interopDefault(require('url'));
 var https = _interopDefault(require('https'));
 var zlib = _interopDefault(require('zlib'));
-var number = require('core-js/core/number');
 
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -22807,7 +22806,7 @@ function createHref(options, file) {
 }
 
 function getBadgeColor(value) {
-	const percentage = number.parseInt(value, 10);
+	const percentage = parseInt(value, 10);
 	if (percentage > 60) {
 		return 'green';
 	}
