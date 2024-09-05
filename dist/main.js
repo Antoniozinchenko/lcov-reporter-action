@@ -22808,7 +22808,7 @@ function createHref(options, file) {
 function getBadgeColor(value) {
 	const percentage = parseInt(value, 10);
 	if (percentage > 60) {
-		return 'green';
+		return '#238636';
 	}
 	if (percentage >= 20) {
 		return 'orange';
