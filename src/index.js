@@ -3,6 +3,7 @@ import core from "@actions/core"
 import { GitHub, context } from "@actions/github"
 import path from "path"
 
+import { setOutput } from "./set_output"
 import { parse, percentage } from "./lcov"
 import { diff } from "./comment"
 import { getChangedFiles } from "./get_changes"
@@ -83,8 +84,8 @@ async function main() {
 		})
 	}
 	const coverageResult = percentage(lcov).toFixed(2);
-	core.setOutput('result', coverageResult);
-	core.setOutput('color', getBadgeColor(coverageResult));
+	setOutput('result', coverageResult);
+	setOutput('color', getBadgeColor(coverageResult));
 }
 
 main().catch(function(err) {
