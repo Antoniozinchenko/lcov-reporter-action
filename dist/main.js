@@ -2,9 +2,9 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var fs = require('fs');
-var fs__default = _interopDefault(fs);
-var os = _interopDefault(require('os'));
+var fs$1 = require('fs');
+var fs$1__default = _interopDefault(fs$1);
+var os$1 = _interopDefault(require('os'));
 var path = _interopDefault(require('path'));
 var child_process = _interopDefault(require('child_process'));
 var Stream = _interopDefault(require('stream'));
@@ -45,7 +45,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 function issueCommand(command, properties, message) {
     const cmd = new Command(command, properties, message);
-    process.stdout.write(cmd.toString() + os.EOL);
+    process.stdout.write(cmd.toString() + os$1.EOL);
 }
 exports.issueCommand = issueCommand;
 function issue(name, message = '') {
@@ -230,7 +230,7 @@ exports.warning = warning;
  * @param message info message
  */
 function info(message) {
-    process.stdout.write(message + os.EOL);
+    process.stdout.write(message + os$1.EOL);
 }
 exports.info = info;
 /**
@@ -383,7 +383,7 @@ const nameMap = new Map([
 ]);
 
 const macosRelease = release => {
-	release = Number((release || os.release()).split('.')[0]);
+	release = Number((release || os$1.release()).split('.')[0]);
 	return {
 		name: nameMap.get(release),
 		version: '10.' + (release - 4)
@@ -440,13 +440,13 @@ function checkStat (stat, path, options) {
 }
 
 function isexe (path, options, cb) {
-  fs__default.stat(path, function (er, stat) {
+  fs$1__default.stat(path, function (er, stat) {
     cb(er, er ? false : checkStat(stat, path, options));
   });
 }
 
 function sync (path, options) {
-  return checkStat(fs__default.statSync(path), path, options)
+  return checkStat(fs$1__default.statSync(path), path, options)
 }
 
 var mode = isexe$1;
@@ -455,13 +455,13 @@ isexe$1.sync = sync$1;
 
 
 function isexe$1 (path, options, cb) {
-  fs__default.stat(path, function (er, stat) {
+  fs$1__default.stat(path, function (er, stat) {
     cb(er, er ? false : checkStat$1(stat, options));
   });
 }
 
 function sync$1 (path, options) {
-  return checkStat$1(fs__default.statSync(path), options)
+  return checkStat$1(fs$1__default.statSync(path), options)
 }
 
 function checkStat$1 (stat, options) {
@@ -826,9 +826,9 @@ function readShebang(command) {
     let fd;
 
     try {
-        fd = fs__default.openSync(command, 'r');
-        fs__default.readSync(fd, buffer, 0, size, 0);
-        fs__default.closeSync(fd);
+        fd = fs$1__default.openSync(command, 'r');
+        fs$1__default.readSync(fd, buffer, 0, size, 0);
+        fs$1__default.closeSync(fd);
     } catch (e) { /* Empty */ }
 
     // Attempt to extract shebang (null is returned if not a shebang)
@@ -2837,8 +2837,8 @@ var isFn = function (fn) {
 
 var isFS = function (stream) {
   if (!ancient) return false // newer node version do not need to care about fs is a special way
-  if (!fs__default) return false // browser
-  return (stream instanceof (fs__default.ReadStream || noop$1) || stream instanceof (fs__default.WriteStream || noop$1)) && isFn(stream.close)
+  if (!fs$1__default) return false // browser
+  return (stream instanceof (fs$1__default.ReadStream || noop$1) || stream instanceof (fs$1__default.WriteStream || noop$1)) && isFn(stream.close)
 };
 
 var isRequest$1 = function (stream) {
@@ -3706,7 +3706,7 @@ const names = new Map([
 ]);
 
 const windowsRelease = release => {
-	const version = /\d+\.\d/.exec(release || os.release());
+	const version = /\d+\.\d/.exec(release || os$1.release());
 
 	if (release && !version) {
 		throw new Error('`release` argument doesn\'t match `n.n`');
@@ -3718,7 +3718,7 @@ const windowsRelease = release => {
 	// If `release` is omitted or we're on a Windows system, and the version number is an ambiguous version
 	// then use `wmic` to get the OS caption: https://msdn.microsoft.com/en-us/library/aa394531(v=vs.85).aspx
 	// If the resulting caption contains the year 2008, 2012 or 2016, it is a server version, so return a server OS name.
-	if ((!release || release === os.release()) && ['6.1', '6.2', '6.3', '10.0'].includes(ver)) {
+	if ((!release || release === os$1.release()) && ['6.1', '6.2', '6.3', '10.0'].includes(ver)) {
 		const stdout = execa.sync('wmic', ['os', 'get', 'Caption']).stdout || '';
 		const year = (stdout.match(/2008|2012|2016/) || [])[0];
 		if (year) {
@@ -3736,13 +3736,13 @@ const osName = (platform, release) => {
 		throw new Error('You can\'t specify a `release` without specifying `platform`');
 	}
 
-	platform = platform || os.platform();
+	platform = platform || os$1.platform();
 
 	let id;
 
 	if (platform === 'darwin') {
-		if (!release && os.platform() === 'darwin') {
-			release = os.release();
+		if (!release && os$1.platform() === 'darwin') {
+			release = os$1.release();
 		}
 
 		const prefix = release ? (Number(release.split('.')[0]) > 15 ? 'macOS' : 'OS X') : 'macOS';
@@ -3751,8 +3751,8 @@ const osName = (platform, release) => {
 	}
 
 	if (platform === 'linux') {
-		if (!release && os.platform() === 'linux') {
-			release = os.release();
+		if (!release && os$1.platform() === 'linux') {
+			release = os$1.release();
 		}
 
 		id = release ? release.replace(/^(\d+\.\d+).*/, '$1') : '';
@@ -3760,8 +3760,8 @@ const osName = (platform, release) => {
 	}
 
 	if (platform === 'win32') {
-		if (!release && os.platform() === 'win32') {
-			release = os.release();
+		if (!release && os$1.platform() === 'win32') {
+			release = os$1.release();
 		}
 
 		id = release ? windowsRelease_1(release) : '';
@@ -22534,11 +22534,11 @@ class Context {
     constructor() {
         this.payload = {};
         if (process.env.GITHUB_EVENT_PATH) {
-            if (fs__default.existsSync(process.env.GITHUB_EVENT_PATH)) {
-                this.payload = JSON.parse(fs__default.readFileSync(process.env.GITHUB_EVENT_PATH, { encoding: 'utf8' }));
+            if (fs$1__default.existsSync(process.env.GITHUB_EVENT_PATH)) {
+                this.payload = JSON.parse(fs$1__default.readFileSync(process.env.GITHUB_EVENT_PATH, { encoding: 'utf8' }));
             }
             else {
-                process.stdout.write(`GITHUB_EVENT_PATH ${process.env.GITHUB_EVENT_PATH} does not exist${os.EOL}`);
+                process.stdout.write(`GITHUB_EVENT_PATH ${process.env.GITHUB_EVENT_PATH} does not exist${os$1.EOL}`);
             }
         }
         this.eventName = process.env.GITHUB_EVENT_NAME;
@@ -22608,6 +22608,15 @@ unwrapExports(github);
 var github_1 = github.context;
 var github_2 = github.GitHub;
 
+const os = require("os");
+const fs = require("fs");
+
+function setOutput(key, value) {
+  // Temporary hack until core actions library catches up with github new recommendations
+  const output = process.env['GITHUB_OUTPUT'];
+  fs.appendFileSync(output, `${key}=${value}${os.EOL}`);
+}
+
 /*
 Copyright (c) 2012, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
@@ -22617,7 +22626,7 @@ http://yuilibrary.com/license/
 
 
 /* istanbul ignore next */
-var exists = fs__default.exists || path.exists;
+var exists = fs$1__default.exists || path.exists;
 
 var walkFile = function(str, cb) {
     var data = [], item;
@@ -22723,7 +22732,7 @@ var parse$1 = function(file, cb) {
         if (!x) {
             return walkFile(file, cb);
         }
-        fs__default.readFile(file, 'utf8', function(err, str) {
+        fs$1__default.readFile(file, 'utf8', function(err, str) {
             walkFile(str, cb);
         });
     });
@@ -23122,14 +23131,14 @@ async function main$1() {
 		core$1.getInput("delete-old-comments").toLowerCase() === "true";
 	const title = core$1.getInput("title");
 
-	const raw = await fs.promises.readFile(lcovFile, "utf-8").catch(err => null);
+	const raw = await fs$1.promises.readFile(lcovFile, "utf-8").catch(err => null);
 	if (!raw) {
 		console.log(`No coverage report found at '${lcovFile}', exiting...`);
 		return
 	}
 
 	const baseRaw =
-		baseFile && (await fs.promises.readFile(baseFile, "utf-8").catch(err => null));
+		baseFile && (await fs$1.promises.readFile(baseFile, "utf-8").catch(err => null));
 	if (baseFile && !baseRaw) {
 		console.log(`No coverage report found at '${baseFile}', ignoring...`);
 	}
@@ -23182,8 +23191,8 @@ async function main$1() {
 		});
 	}
 	const coverageResult = percentage(lcov).toFixed(2);
-	core$1.setOutput('result', coverageResult);
-	core$1.setOutput('color', getBadgeColor(coverageResult));
+	setOutput('result', coverageResult);
+	setOutput('color', getBadgeColor(coverageResult));
 }
 
 main$1().catch(function(err) {
